@@ -1,0 +1,65 @@
+#texto_titulo{
+background-color:rgb(4,64,22);
+}
+#menu{
+   background-image:url('./fundo.png');
+   background-repeat: no-repeat;
+   background-position: center;
+}
+#inicio,#EditarMembro,#UI_gestao_funcoes,QMessageBox,#gestao_usuarios,#tela_logon,#opcoes{
+    background-color: rgba(0,91,64,255);
+}
+ClickableLabel{
+color:#c9d7d1;
+}
+QLabel{
+ color:#c9d7d1;
+
+}
+#versiculo{
+background-color:#044016;
+}
+#gestao_financeira{
+ background-color:rgba(0,91,64,255);
+}
+ClickableLabel{
+    
+    color: #ffffffff;
+    border-radius:10px;
+
+}
+ClickableLabel:hover{
+   background-color:rgba(31, 141, 64, 1);
+}
+QTableWidget{
+    background-color:#c9d7d1;
+    color:#012b14;
+}
+#membros_inicial{
+    background-color: rgba(0,91,64,255);
+}
+QPushButton{
+    color:#c9d7d1;
+    background-color:rgb(4,64,22) ;
+}
+QWidget,QMessageBox,#alterar_senha,#opcoes{
+    font-family: "Times New Roman";
+   
+}
+QListWidget , QLineEdit , QComboBox{
+    color:rgba(0, 0, 0, 1) ;
+    background-color:rgba(255, 255, 255, 1);
+}
+QDateEdit {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(255, 255, 255, 1);
+  
+}
+#widget_informacso_usuario{
+    background-color:rgba(76, 116, 88, 1);
+    border-radius:10px;
+}
+#titulo_acessos, #titulo_informacoes{
+    background-color: rgb(4, 64, 22);
+     border-bottom: 2px solid #00ff88;
+}

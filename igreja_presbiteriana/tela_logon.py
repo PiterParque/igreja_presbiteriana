@@ -140,6 +140,7 @@ class ui_logon(QtWidgets.QWidget):
         self.botao_olho.move(rect.right() - 25, (rect.height() - 20) // 2)
 
 if __name__ == "__main__":
+
     import sys
     app = QtWidgets.QApplication(sys.argv)
     with open("./estilo.qss", "r") as f:

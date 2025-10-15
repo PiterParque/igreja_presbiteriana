@@ -1,5 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import adicionar_professo_no_conselho, mostrar_conselho, mostrar_membros_all
+from conect_banco import adicionar_professo_no_conselho, mostrar_conselho, mostrar_membros_all
 
 class Ui_adicionar_conselho(QtWidgets.QWidget):
     def __init__(self, parent=None):

@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import buscar_funcoes_por_area,deletar_funcao,autenticar_usuario
+from conect_banco import buscar_funcoes_por_area,deletar_funcao,autenticar_usuario
 from adicionar_funcao import ui_adicionar_funcao
 from editar_funcao_memebro import Ui_EditarMembro
 class ClickableLabel(QtWidgets.QLabel):

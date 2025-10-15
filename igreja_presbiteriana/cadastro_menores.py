@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import cadastrar_menores
+from conect_banco import cadastrar_menores
 from PyQt6.QtWidgets import QMessageBox
 from datetime import datetime
 

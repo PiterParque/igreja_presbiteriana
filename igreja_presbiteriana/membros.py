@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import  (mostrar_membros_all,desativar_ativar,
+from conect_banco import  (mostrar_membros_all,desativar_ativar,
  buscar_professo_por_nome,buscar_nome_menor,buscar_nome_agregado,mostrar_junta_diagonal,
  remover_professo_da_junta,mostrar_conselho,remover_professo_do_conselho,buscar_desativado,autenticar_usuario)
 from editar_professo import Ui_edicao_professos

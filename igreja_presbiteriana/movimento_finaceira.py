@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import movimento_financeiro 
+from conect_banco import movimento_financeiro 
 import re
 
 

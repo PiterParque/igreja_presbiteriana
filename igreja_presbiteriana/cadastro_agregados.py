@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import cadastrar_agregados
+from conect_banco import cadastrar_agregados
 from PyQt6.QtWidgets import QMessageBox
 
 class Ui_cadastro_agrgados(QtWidgets.QWidget):

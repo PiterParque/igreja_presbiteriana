@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import buscar_nome_agregado,editar_agregado
+from conect_banco import buscar_nome_agregado,editar_agregado
 
 
 class Ui_editar_agregado(QtWidgets.QWidget):

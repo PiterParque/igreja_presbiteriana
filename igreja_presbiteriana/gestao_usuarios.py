@@ -9,7 +9,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from cadastrar_usuario import Ui_CriarUsuario
 from editar_usuario import Ui_editar_usuario
-from conect_banco_demo import mostrar_usuarios,desativar_ativar_usuario,autenticar_usuario
+from conect_banco import mostrar_usuarios,desativar_ativar_usuario,autenticar_usuario
 
 
 class ui_gestao_usaurios(QtWidgets.QWidget):

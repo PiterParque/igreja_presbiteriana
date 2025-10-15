@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import buscar_professo_por_nome,buscar_professo_transferido,baixar_arquivo_transferencia,salvar_dados_professo
+from conect_banco import buscar_professo_por_nome,buscar_professo_transferido,baixar_arquivo_transferencia,salvar_dados_professo
 from PyQt6.QtWidgets import QButtonGroup
 import sys
 from PyQt6.QtWidgets import QFileDialog,QMessageBox
@@ -374,7 +374,7 @@ class Ui_edicao_professos(QtWidgets.QWidget):
                 with open(arquivo, "rb") as f:
                     pdf_bytes = f.read()
 
-                from conect_banco_demo import conn  # 🔹 use sua conexão com o banco
+                from igreja_presbiteriana.conect_banco import conn  # 🔹 use sua conexão com o banco
                 conexao=conn 
                 cursor = conexao.cursor()
                 cursor.execute("""

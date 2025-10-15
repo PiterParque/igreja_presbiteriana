@@ -1,7 +1,7 @@
 import pandas as pd
 import sqlite3
 import openpyxl
-from conect_banco_demo import saldo_por_data
+from conect_banco import saldo_por_data
 import os
 
 def gerar_relatorio(inicio, fim, caminho_arquivo):

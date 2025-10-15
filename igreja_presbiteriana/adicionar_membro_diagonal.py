@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import mostrar_junta_diagonal,adicionar_professo_na_junta,mostrar_membros_all
+from conect_banco import mostrar_junta_diagonal,adicionar_professo_na_junta,mostrar_membros_all
 
 
 class Ui_adicioanar_membro_diagonal(QtWidgets.QWidget):

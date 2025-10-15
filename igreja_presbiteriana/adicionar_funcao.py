@@ -1,5 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import (
+from conect_banco import (
     mostrar_membros_all,
     cadastrar_funcao,
     buscar_funcoes_por_area

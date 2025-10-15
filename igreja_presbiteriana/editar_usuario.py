@@ -1,5 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import editar_usuario, buscar_permissoes, definir_permissoes
+from conect_banco import editar_usuario, buscar_permissoes, definir_permissoes
 from alterar_senha import ui_alterar_senha
 
 

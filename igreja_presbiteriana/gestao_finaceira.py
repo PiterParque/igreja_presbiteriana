@@ -8,7 +8,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from movimento_finaceira import Ui_movimento_financeiro
-from conect_banco_demo import mostrar_movimentos, valor_atual,mostrar_movimentos_periodo,autenticar_usuario
+from conect_banco import mostrar_movimentos, valor_atual,mostrar_movimentos_periodo,autenticar_usuario
 from PyQt6.QtWidgets import QMenu,QInputDialog
 from manipulando_planilha import gerar_relatorio
 from PyQt6.QtWidgets import QMessageBox ,QFileDialog 

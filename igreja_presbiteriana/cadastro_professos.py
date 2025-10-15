@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import cadastrar_professo,buscar_professo_por_nome,cadastrar_professo_transferido
+from conect_banco import cadastrar_professo,buscar_professo_por_nome,cadastrar_professo_transferido
 from PyQt6.QtWidgets import  QFileDialog
 class Ui_cadastrar_professo(QtWidgets.QWidget):
     def __init__(self,parent):

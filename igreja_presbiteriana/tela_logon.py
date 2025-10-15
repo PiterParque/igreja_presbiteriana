@@ -8,7 +8,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from inicio import Ui_inicio
-from conect_banco_demo import autenticar_usuario
+from conect_banco import autenticar_usuario
 
 
 class ui_logon(QtWidgets.QWidget):

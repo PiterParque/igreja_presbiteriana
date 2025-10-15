@@ -1,5 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import editar_funcao
+from conect_banco import editar_funcao
 
 class Ui_EditarMembro(QtWidgets.QWidget):
     def __init__(self, membro, area,parent=None):

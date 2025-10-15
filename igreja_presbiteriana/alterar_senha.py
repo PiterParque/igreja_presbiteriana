@@ -1,5 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import alterar_senha_usuario
+from conect_banco import alterar_senha_usuario
 
 class ui_alterar_senha(QtWidgets.QWidget):
     def __init__(self, nome_usuario,id_usuario,senha_atual):

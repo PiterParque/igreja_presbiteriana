@@ -457,9 +457,7 @@ if criar_tabelas:
     CREATE TABLE VESICULO_atual(
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         LIVRO TEXT,     
-        VERSICULO TEXT,           
-        DATA_EXPOSICAO_INICIAL DATE,
-        DATA_EXPOSICAO_FINAL DATE          
+        VERSICULO TEXT,         
                    );  
 """)
     
@@ -1388,9 +1386,9 @@ def buscar_vesiculo_por_id(id_vesiculo, conexao=cursor):
     """
     try:
         conexao.execute("""
-            SELECT ID,, LIVRO, VERSICULO, DATA_CADASTRO
+            SELECT ID, LIVRO, VERSICULO, DATA_CADASTRO
             FROM VESICULOS
-            WHERE ID = ?
+            WHERE ID = ? ;
         """, (id_vesiculo,))
         resultado = conexao.fetchone()
         if resultado:
@@ -1438,7 +1436,7 @@ def deletar_vesiculo(id_vesiculo, conexao=cursor):
     except Exception as e:
         print(f" Erro ao deletar versículo: {e}")
         return False
-def buscar_versiculo_atual(conexao):
+def buscar_versiculo_atual(conexao=conn):
     """
     Retorna o versículo correspondente à data atual (entre DATA_EXPOSICAO_INICIAL e DATA_EXPOSICAO_FINAL).
     """
@@ -1447,40 +1445,40 @@ def buscar_versiculo_atual(conexao):
         data_hoje = datetime.now().date()
 
         cursor.execute("""
-            SELECT ID, LIVRO, VERSICULO, DATA_EXPOSICAO_INICIAL, DATA_EXPOSICAO_FINAL
-            FROM VESICULO_atual
-            WHERE DATE(?) BETWEEN DATE(DATA_EXPOSICAO_INICIAL) AND DATE(DATA_EXPOSICAO_FINAL)
-            LIMIT 1
-        """, (data_hoje,))
+            SELECT * FROM VESICULO_atual  ORDER BY ID DESC
+            LIMIT 1;
+           
+        """, ())
 
         resultado = cursor.fetchone()
         if resultado:
-            return {
-                "id": resultado[0],
-                "livro": resultado[1],
-                "versiculo": resultado[2],
-                "data_inicial": resultado[3],
-                "data_final": resultado[4],
-            }
+          return resultado
         else:
-            print(" Nenhum versículo ativo para a data atual.")
-            return None
-
+            return ()
     except Exception as e:
         print(f" Erro ao buscar versículo atual: {e}")
         return None
 
-def inserir_versiculo_atual(livro, versiculo, data_inicial, data_final, conexao):
+def inserir_versiculo_atual(livro, versiculo, data_inicial, data_final,permanente, conexao=conn):
     """
     Insere um novo versículo na tabela VESICULO_atual com data inicial e final de exibição.
     """
     try:
         cursor = conexao.cursor()
-        cursor.execute("""
-            INSERT INTO VESICULO_atual (LIVRO, VERSICULO, DATA_EXPOSICAO_INICIAL, DATA_EXPOSICAO_FINAL)
-            VALUES (?, ?, ?, ?)
-        """, (livro, versiculo, data_inicial, data_final))
-        conexao.commit()
+        if permanente == True:
+            cursor.execute("""
+                INSERT INTO VESICULO_atual (LIVRO, VERSICULO,PERMANENTE)
+                VALUES (?, ?, ?)
+            """, (livro, versiculo,permanente))
+            conexao.commit()
+
+
+        else:
+            cursor.execute("""
+                INSERT INTO VESICULO_atual (LIVRO, VERSICULO, DATA_EXPOSICAO_INICIAL, DATA_EXPOSICAO_FINAL,PERMANENTE)
+                VALUES (?, ?, ?, ?,?)
+            """, (livro, versiculo, data_inicial, data_final,permanente))
+            conexao.commit()
 
         # Retorna o ID recém inserido
         cursor.execute("SELECT last_insert_rowid()")

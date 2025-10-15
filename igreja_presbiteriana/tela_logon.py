@@ -101,7 +101,8 @@ class ui_logon(QtWidgets.QWidget):
             if retorno[0]:
                 self.ui_inicio = Ui_inicio(usuario=dados_usuario)
                 self.ui_inicio.show()
-                self.close()
+                Widget.close()
+                
             else:
                 msg = QtWidgets.QMessageBox()
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Critical)

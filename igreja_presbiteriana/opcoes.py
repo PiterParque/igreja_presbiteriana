@@ -7,15 +7,17 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from conect_banco_demo import  cadastrar_vesiculo,editar_vesiculo,deletar_vesiculo,listar_vesiculos,buscar_vesiculo_por_id
-
+from conect_banco_demo import  cadastrar_vesiculo,editar_vesiculo,deletar_vesiculo,listar_vesiculos,buscar_vesiculo_por_id,inserir_versiculo_atual,buscar_versiculo_atual
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 class UI_opcoes(QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self,parent=None):
         super().__init__()
+        self.parent=parent
         self.setupUi(self)
     def setupUi(self, Widget):
         Widget.setObjectName("opcoes")
-        Widget.resize(765, 600)
+        Widget.resize(765, 500)
         self.widget = QtWidgets.QWidget(parent=Widget)
         self.widget.setObjectName("opcoes")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(Widget)
@@ -133,25 +135,12 @@ class UI_opcoes(QtWidgets.QWidget):
         spacerItem2 = QtWidgets.QSpacerItem(183, 20, QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem2)
         self.verticalLayout_5.addLayout(self.horizontalLayout_7)
-        self.label_7 = QtWidgets.QLabel(parent=self.widget)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        font.setBold(True)
-        self.label_7.setFont(font)
-        self.label_7.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
-        self.label_7.setObjectName("label_7")
-        self.verticalLayout_5.addWidget(self.label_7)
-        self.radioButton = QtWidgets.QRadioButton(parent=self.widget)
-        self.radioButton.setObjectName("radioButton")
-        self.verticalLayout_5.addWidget(self.radioButton)
         self.widget_tempo_alteracao = QtWidgets.QWidget(parent=self.widget)
         self.widget_tempo_alteracao.setObjectName("widget_tempo_alteracao")
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.widget_tempo_alteracao)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.radioButton_2 = QtWidgets.QRadioButton(parent=self.widget_tempo_alteracao)
-        self.radioButton_2.setObjectName("radioButton_2")
         self.spinBox = QtWidgets.QSpinBox(parent=self.widget_tempo_alteracao)
         self.spinBox.setObjectName("spinBox")
         self.horizontalLayout_5.addWidget(self.spinBox)
@@ -224,14 +213,13 @@ class UI_opcoes(QtWidgets.QWidget):
         self.verticalLayout_3.addItem(spacerItem5)
         self.horizontalLayout_4.addLayout(self.verticalLayout_3)
         self.verticalLayout_4.addLayout(self.horizontalLayout_4)
-        self.layout_de.addWidget(self.radioButton_2)
         self.layout_de.addWidget(self.widget_tempo_alteracao)
         self.salvar_versiculo = QtWidgets.QPushButton(parent=self.widget_tempo_alteracao)
         self.salvar_versiculo.setObjectName("salvar_versiculo")
         self.horizontalLayout__ = QtWidgets.QHBoxLayout()
         self.horizontalLayout__.setObjectName("horizontalLayout__")
         self.horizontalLayout__.addWidget(self.salvar_versiculo)
-        self.verticalLayout_4.addLayout(self.horizontalLayout__)
+        self.horizontalLayout_7.addLayout(self.horizontalLayout__)
         self.salvar_versiculo.setMaximumWidth(200)
         self.horizontalLayout__.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
         self.radioButton_3.setChecked(True)
@@ -265,9 +253,6 @@ class UI_opcoes(QtWidgets.QWidget):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("Widget", "texto"))
         self.label_6.setText(_translate("Widget", "Versiculo Atual:"))
-        self.label_7.setText(_translate("Widget", "Tempo de alteração"))
-        self.radioButton.setText(_translate("Widget", "Nunca"))
-        self.radioButton_2.setText(_translate("Widget", "De "))
         self.label_8.setText(_translate("Widget", "Dias"))
         self.label_10.setText(_translate("Widget", "É"))
         self.label_9.setText(_translate("Widget", "Meses"))
@@ -279,9 +264,6 @@ class UI_opcoes(QtWidgets.QWidget):
         self.pushButton_3.setText(_translate("Widget", "REMOVER"))
         self.salvar_versiculo.setText(_translate("Widget", "Salvar Alteraçoes de versiculo"))
         self.widget_tempo_alteracao.setVisible(False)
-        self.radioButton.setChecked(True)
-        self.radioButton_2.toggled.connect(self._alteracao_versiculo)
-        self.radioButton.toggled.connect(self._alteracao_versiculo)
         self.pushButton.clicked.connect(self.adicionar_linha)
         self.pushButton_3.clicked.connect(self.remover_linha)
         self.tableWidget.cellChanged.connect(self.atualizar_versiculo)
@@ -292,12 +274,6 @@ class UI_opcoes(QtWidgets.QWidget):
         self.salvar_versiculo.clicked.connect(self.salvar_versiculo_)
         
         self.prencher_combo()
-    def _alteracao_versiculo(self):
-        if not self.radioButton.isChecked():
-               self.widget_tempo_alteracao.setVisible(True)
-               
-        else:
-            self.widget_tempo_alteracao.setVisible(False)
     def carregar_versiculos(self):
         """Carrega todos os versículos da base."""
         self.tableWidget.blockSignals(True)  # evita disparar cellChanged ao preencher
@@ -312,38 +288,75 @@ class UI_opcoes(QtWidgets.QWidget):
             self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem(str(v['id'])))  # ID
         self.tableWidget.blockSignals(False)
     def adicionar_linha(self):
-        """Adiciona um novo versículo no banco e na tabela."""
-        novo_id = cadastrar_vesiculo(livro="Novo Livro", versiculo="Novo Versículo")  # chama função do banco
-        if novo_id:
-            row = self.tableWidget.rowCount()
-            self.tableWidget.insertRow(row)
-            
-            self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem("Novo Livro"))
-            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem("Novo Versículo"))
-            self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem(str(novo_id)))
+        """Adiciona um novo versículo no banco e na tabela (com proteção contra sinais)."""
+        novo_id = cadastrar_vesiculo(livro="Novo Livro", versiculo="Novo Versículo")  # chama DB
+        if not novo_id:
+            print("Erro: cadastrar_vesiculo não retornou um id.")
+            return
+
+        # bloqueia sinais para evitar cellChanged disparado enquanto preenchemos
+        self.tableWidget.blockSignals(True)
+        row = self.tableWidget.rowCount()
+        self.tableWidget.insertRow(row)
+
+        # cria itens e garante que não serão None
+        item_livro = QtWidgets.QTableWidgetItem("Novo Livro")
+        item_vers = QtWidgets.QTableWidgetItem("Novo Versículo")
+        item_id = QtWidgets.QTableWidgetItem(str(novo_id))
+
+        self.tableWidget.setItem(row, 0, item_livro)
+        self.tableWidget.setItem(row, 1, item_vers)
+        self.tableWidget.setItem(row, 2, item_id)
+
+        self.tableWidget.blockSignals(False)
+        self.prencher_combo()
         
     def remover_linha(self):
-        """Remove o versículo selecionado."""
+        """Remove o versículo selecionado (usa coluna 2 para o id)."""
         row = self.tableWidget.currentRow()
         if row < 0:
             return
-        id_item = self.tableWidget.item(row, 0)
-        if id_item:
+
+        id_item = self.tableWidget.item(row, 2)  # coluna 2 -> ID
+        if id_item and id_item.text().isdigit():
             id_versiculo = int(id_item.text())
             deletar_vesiculo(id_versiculo)
+        else:
+            # se não existir id (linha talvez incompleta), apenas remove visualmente
+            print("Aviso: não foi possível obter o ID do versículo (removendo visualmente).")
         self.tableWidget.removeRow(row)
+        self.prencher_combo()
     def atualizar_versiculo(self, row, column):
-        """Atualiza no banco de dados quando o texto da célula muda."""
-        
-        livro_item = self.tableWidget.item(row, 0)
-        texto_item = self.tableWidget.item(row, 1)
-        id_item = self.tableWidget.item(row, 2)
+        """
+        Atualiza no banco quando o texto da célula muda.
+        Proteções contra células None e id faltando.
+        """
         try:
-            id_versiculo = int(id_item.text())
-            livro = livro_item.text() 
-            texto = texto_item.text() 
-            editar_vesiculo(id_versiculo,livro, texto)
-            print(id_item.text())
+            livro_item = self.tableWidget.item(row, 0)
+            texto_item = self.tableWidget.item(row, 1)
+            id_item = self.tableWidget.item(row, 2)
+
+            # validações — evita .text() em None
+            if id_item is None:
+                print(f"Ignorado: célula ID vazia na linha {row}.")
+                return
+            id_text = id_item.text().strip()
+            if not id_text.isdigit():
+                print(f"Ignorado: ID inválido na linha {row}: '{id_text}'")
+                return
+            id_versiculo = int(id_text)
+
+            livro = livro_item.text().strip() if livro_item is not None else ""
+            texto = texto_item.text().strip() if texto_item is not None else ""
+
+            # evita enviar update desnecessário caso nada tenha sido preenchido
+            if livro == "" and texto == "":
+                print(f"Ignorado: linha {row} vazia (sem livro e sem texto).")
+                return
+
+            editar_vesiculo(id_versiculo, livro, texto)
+            # opcional: atualizar combo se nome do versículo mudou
+            self.prencher_combo()
         except Exception as e:
             print("Erro ao atualizar versículo:", e)
     def prencher_combo(self):
@@ -370,20 +383,41 @@ class UI_opcoes(QtWidgets.QWidget):
         self.data_hora_atual = data_hora_manual
         print("Data e hora definidas manualmente:", data_hora_manual.toString("yyyy-MM-dd HH:mm:ss"))
     def salvar_versiculo_(self):
-        id_versiculo = self.comboBox.currentData()
+        versiculos = listar_vesiculos()
+        id_versiculo =None
+        for versiculo_ in versiculos:
+            if versiculo_["id"] == self.comboBox.currentData():
+               id_versiculo = versiculo_['id']
+
         if id_versiculo is None:
             print("Nenhum versículo selecionado.")
             return
 
         versiculo = buscar_vesiculo_por_id(id_versiculo)
+        
         if not versiculo:
             print("Versículo não encontrado no banco.")
             return
 
         livro = versiculo['livro']
         texto = versiculo['versiculo']
+        data_inicial = datetime.now().date()
+        dias = self.spinBox.value()
+        meses = self.spinBox_2.value()
+        # Adiciona meses e dias
+        data_final = data_inicial + relativedelta(months=+meses, days=+dias)
+        permanente=False
+        
+        inserir_versiculo_atual(livro, texto, data_inicial, data_final,permanente)
+        if self.parent:
+            self.parent.atualizar_versiculo()
+        else:
+            data_final = data_inicial
+            permanente=True
+            inserir_versiculo_atual(livro, texto, data_inicial, data_final,permanente)
 
         print(f"Versículo salvo: {livro} - {texto}")
+        print(buscar_versiculo_atual())
 
 if __name__ == "__main__":
     import sys

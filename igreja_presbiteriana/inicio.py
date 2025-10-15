@@ -12,7 +12,7 @@ from membros import Ui_membros
 from gestao_funcoes import ui_gestao_funcoes
 from gestao_usuarios import ui_gestao_usaurios
 import sys
-from conect_banco_demo import buscar_permissoes,autenticar_usuario
+from conect_banco_demo import buscar_permissoes,autenticar_usuario,buscar_versiculo_atual
 from opcoes import UI_opcoes
 class ClickableLabel(QtWidgets.QLabel):
         clicked = QtCore.pyqtSignal()
@@ -178,7 +178,8 @@ class Ui_inicio(QtWidgets.QWidget):
 
     def retranslateUi(self, inicio):
         _translate = QtCore.QCoreApplication.translate
-        
+        versiculo=buscar_versiculo_atual()
+        versiculo= str(versiculo[2]+" "+versiculo[1])
         self.texto_titulo.setText(_translate("inicio", "Igreja Presbiteriana do Bairo Novo amazonas"))
         self.financas.setText(_translate("inicio", "Finanças"))
         self.gestao_funcoes.setText(_translate("inicio", "Gestão de Funçoes"))
@@ -187,7 +188,7 @@ class Ui_inicio(QtWidgets.QWidget):
         self.gestao_usaurios.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.cadastro_membros.setText(_translate("inicio", "Cadastro de membros"))
         self.opcoes.setText(_translate("inicio", "Opçoes"))
-        self.versiculo.setText(_translate("inicio", "Ninguém pode lançar outro fundamento, além do que já está posto, o qual é Jesus Cristo.” (1 Coríntios 3:11)"))
+        self.versiculo.setText(_translate("inicio", versiculo))
         self.financas.clicked.connect(self.on_financas_clicked)
         self.cadastro_membros.clicked.connect(self.membro)
         self.gestao_funcoes.clicked.connect(self._gestao_funcoes)
@@ -197,11 +198,10 @@ class Ui_inicio(QtWidgets.QWidget):
         self.membros=Ui_membros(usuario=self.usuario)
         self.janela_gestao_funcoes=ui_gestao_funcoes(usuario=self.usuario)
         self.janela_gestao_usuarios=ui_gestao_usaurios(usuario=self.usuario)
-        self.janela_opcoes=UI_opcoes()
+        self.janela_opcoes=UI_opcoes(self)
         if self.usuario:
            try:
                 permissoes=buscar_permissoes(self.id_usuario)
-                print("permissoes inicio:",permissoes)
                 self.financas.setVisible(permissoes['financa'])
                 self.cadastro_membros.setVisible(permissoes['gestao_membros'])
                 self.gestao_funcoes.setVisible(permissoes['gestao_funcoes'])
@@ -234,4 +234,7 @@ class Ui_inicio(QtWidgets.QWidget):
     def _opcoes(self):
          self.janela_opcoes.setWindowTitle("Opçoes - Igreja Presbiteriana do Bairro Amazonas")
          self.janela_opcoes.show()
-    
+    def atualizar_versiculo(self):
+         versiculo=buscar_versiculo_atual()
+         versiculo= str(versiculo[2]+" "+versiculo[1])
+         self.versiculo.setText(versiculo)

@@ -141,55 +141,12 @@ class UI_opcoes(QtWidgets.QWidget):
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.spinBox = QtWidgets.QSpinBox(parent=self.widget_tempo_alteracao)
-        self.spinBox.setObjectName("spinBox")
-        self.horizontalLayout_5.addWidget(self.spinBox)
-        self.label_8 = QtWidgets.QLabel(parent=self.widget_tempo_alteracao)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        self.label_8.setFont(font)
-        self.label_8.setObjectName("label_8")
-        self.horizontalLayout_5.addWidget(self.label_8)
         self.horizontalLayout_8.addLayout(self.horizontalLayout_5)
-        self.label_10 = QtWidgets.QLabel(parent=self.widget_tempo_alteracao)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        font.setBold(True)
-        self.label_10.setFont(font)
-        self.label_10.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
-        self.label_10.setObjectName("label_10")
-        self.horizontalLayout_8.addWidget(self.label_10)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.spinBox_2 = QtWidgets.QSpinBox(parent=self.widget_tempo_alteracao)
-        self.spinBox_2.setObjectName("spinBox_2")
-        self.horizontalLayout_6.addWidget(self.spinBox_2)
-        self.label_9 = QtWidgets.QLabel(parent=self.widget_tempo_alteracao)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        self.label_9.setFont(font)
-        self.label_9.setObjectName("label_9")
-        self.horizontalLayout_6.addWidget(self.label_9)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.label_11 = QtWidgets.QLabel(parent=self.widget_tempo_alteracao)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        self.label_11.setFont(font)
-        self.label_11.setObjectName("label_11")
-        self.horizontalLayout_9.addWidget(self.label_11)
-        self.radioButton_3 = QtWidgets.QRadioButton(parent=self.widget_tempo_alteracao)
-        self.radioButton_3.setObjectName("radioButton_3")
-        self.horizontalLayout_9.addWidget(self.radioButton_3)
-        self.radioButton_4 = QtWidgets.QRadioButton(parent=self.widget_tempo_alteracao)
-        self.radioButton_4.setObjectName("radioButton_4")
-        self.horizontalLayout_9.addWidget(self.radioButton_4)
-        self.radioButton_5 = QtWidgets.QRadioButton(parent=self.widget_tempo_alteracao)
-        self.radioButton_5.setObjectName("radioButton_5")
-        self.horizontalLayout_9.addWidget(self.radioButton_5)
+
         self.horizontalLayout_6.addLayout(self.horizontalLayout_9)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_6.addItem(spacerItem3)
@@ -222,7 +179,6 @@ class UI_opcoes(QtWidgets.QWidget):
         self.horizontalLayout_7.addLayout(self.horizontalLayout__)
         self.salvar_versiculo.setMaximumWidth(200)
         self.horizontalLayout__.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.radioButton_3.setChecked(True)
         self.retranslateUi(Widget)
         QtCore.QMetaObject.connectSlotsByName(Widget)
                 # === DEFINIR DATA E HORA ATUAL ===
@@ -253,17 +209,9 @@ class UI_opcoes(QtWidgets.QWidget):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("Widget", "texto"))
         self.label_6.setText(_translate("Widget", "Versiculo Atual:"))
-        self.label_8.setText(_translate("Widget", "Dias"))
-        self.label_10.setText(_translate("Widget", "É"))
-        self.label_9.setText(_translate("Widget", "Meses"))
-        self.label_11.setText(_translate("Widget", "Em ordem :"))
-        self.radioButton_3.setText(_translate("Widget", "Aleatoria"))
-        self.radioButton_4.setText(_translate("Widget", "Do primeiro "))
-        self.radioButton_5.setText(_translate("Widget", "Do Ultimo"))
         self.pushButton.setText(_translate("Widget", "ADICIONAR"))
         self.pushButton_3.setText(_translate("Widget", "REMOVER"))
         self.salvar_versiculo.setText(_translate("Widget", "Salvar Alteraçoes de versiculo"))
-        self.widget_tempo_alteracao.setVisible(False)
         self.pushButton.clicked.connect(self.adicionar_linha)
         self.pushButton_3.clicked.connect(self.remover_linha)
         self.tableWidget.cellChanged.connect(self.atualizar_versiculo)
@@ -272,6 +220,7 @@ class UI_opcoes(QtWidgets.QWidget):
         # Quando o usuário alterar a data ou a hora manualmente
         self.pushButton_4.clicked.connect(self.definir_data_hora_manual)
         self.salvar_versiculo.clicked.connect(self.salvar_versiculo_)
+        
         
         self.prencher_combo()
     def carregar_versiculos(self):
@@ -364,6 +313,19 @@ class UI_opcoes(QtWidgets.QWidget):
         versiculos = listar_vesiculos()
         for v in versiculos:
             self.comboBox.addItem(f"{v['livro']} - {v['versiculo']}", v['id'])
+        try:
+            versiculo_atual = buscar_versiculo_atual()
+            print(versiculos)
+            if versiculo_atual:
+                texto_atual = f"{versiculo_atual[1]} - {versiculo_atual[2]}",versiculo_atual[0]
+                for i,versiculo in enumerate(versiculos):
+                    print(self.comboBox.itemText(i),"==",texto_atual)
+                    if self.comboBox.itemText(i) == texto_atual[0]:
+                        self.comboBox.setCurrentIndex(i)
+                        break
+        except Exception as e:
+            print("Erro ao definir versículo atual:", e)
+        
     def atualizar_data_hora(self):
         """Atualiza o calendário e o timeEdit para a data e hora atuais."""
         data_atual = QtCore.QDate.currentDate()
@@ -401,23 +363,16 @@ class UI_opcoes(QtWidgets.QWidget):
 
         livro = versiculo['livro']
         texto = versiculo['versiculo']
-        data_inicial = datetime.now().date()
-        dias = self.spinBox.value()
-        meses = self.spinBox_2.value()
-        # Adiciona meses e dias
-        data_final = data_inicial + relativedelta(months=+meses, days=+dias)
-        permanente=False
         
-        inserir_versiculo_atual(livro, texto, data_inicial, data_final,permanente)
+        # Adiciona meses e dias
+        
+        inserir_versiculo_atual(livro, texto)
+        inserir_versiculo_atual(livro, texto,)
         if self.parent:
             self.parent.atualizar_versiculo()
-        else:
-            data_final = data_inicial
-            permanente=True
-            inserir_versiculo_atual(livro, texto, data_inicial, data_final,permanente)
 
-        print(f"Versículo salvo: {livro} - {texto}")
-        print(buscar_versiculo_atual())
+        
+      
 
 if __name__ == "__main__":
     import sys

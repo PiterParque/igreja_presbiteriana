@@ -8,7 +8,162 @@ criar_tabelas = not os.path.exists(db_path)
 
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
-    
+# ======================================
+# CRUD - VERSÍCULOS
+# ======================================
+
+def cadastrar_vesiculo( livro, versiculo, conexao=cursor):
+    """
+    Cadastra um novo versículo no banco.
+    """
+    try:
+        conexao.execute("""
+            INSERT INTO VESICULOS (LIVRO, VERSICULO)
+            VALUES (?, ?)
+        """, ( livro, versiculo))
+        conn.commit()
+        print(" Versículo cadastrado com sucesso.")
+        conexao.execute("""
+            SELECT ID, LIVRO, VERSICULO, DATA_CADASTRO
+            FROM VESICULOS
+            ORDER BY ID DESC
+        """)
+        id_inserido = cursor.lastrowid
+
+        print(f" Versículo cadastrado com sucesso (ID: {id_inserido})")
+        return id_inserido  # retorna o ID do versículo cadastrado
+    except Exception as e:
+        print(f" Erro ao cadastrar versículo: {e}")
+        
+
+
+def listar_vesiculos(conexao=cursor):
+    """
+    Retorna todos os versículos cadastrados no sistema.
+    """
+    try:
+        conexao.execute("""
+            SELECT ID, LIVRO, VERSICULO, DATA_CADASTRO
+            FROM VESICULOS
+            ORDER BY ID DESC
+        """)
+        resultado = conexao.fetchall()
+        lista = []
+        for v in resultado:
+            lista.append({
+                "id": v[0],
+                "livro": v[1],
+                "versiculo": v[2],
+                "data_cadastro": v[3]
+            })
+        return lista
+    except Exception as e:
+        print(f" Erro ao listar versículos: {e}")
+        return []
+
+
+def buscar_vesiculo_por_id(id_vesiculo, conexao=cursor):
+    """
+    Busca um versículo pelo ID.
+    """
+    try:
+        conexao.execute("""
+            SELECT ID, LIVRO, VERSICULO, DATA_CADASTRO
+            FROM VESICULOS
+            WHERE ID = ? ;
+        """, (id_vesiculo,))
+        resultado = conexao.fetchone()
+        if resultado:
+            return {
+                "id": resultado[0],
+                "livro": resultado[1],
+                "versiculo": resultado[2],
+                "data_cadastro": resultado[3]
+            }
+        return None
+    except Exception as e:
+        print(f" Erro ao buscar versículo: {e}")
+        return None
+
+
+def editar_vesiculo(id_vesiculo, novo_livro, novo_versiculo, conexao=cursor):
+    """
+    Edita o texto ou o livro de um versículo.
+    """
+    try:
+        conexao.execute("""
+            UPDATE VESICULOS
+            SET LIVRO = ?, VERSICULO = ?
+            WHERE ID = ?
+        """, (novo_livro, novo_versiculo, id_vesiculo))
+        conn.commit()
+        print(f" Versículo ID {id_vesiculo} atualizado com sucesso.")
+        return True
+    except Exception as e:
+        print(f" Erro ao editar versículo: {e}")
+        return False
+
+
+def deletar_vesiculo(id_vesiculo, conexao=cursor):
+    """
+    Remove um versículo do banco.
+    """
+    try:
+        conexao.execute("""
+            DELETE FROM VESICULOS WHERE ID = ?
+        """, (id_vesiculo,))
+        conn.commit()
+        print(f" Versículo ID {id_vesiculo} removido com sucesso.")
+        return True
+    except Exception as e:
+        print(f" Erro ao deletar versículo: {e}")
+        return False
+def buscar_versiculo_atual(conexao=conn):
+    """
+    Retorna o versículo correspondente à data atual (entre DATA_EXPOSICAO_INICIAL e DATA_EXPOSICAO_FINAL).
+    """
+    try:
+        cursor = conexao.cursor()
+        data_hoje = datetime.now().date()
+
+        cursor.execute("""
+            SELECT * FROM VESICULO_atual  ORDER BY ID DESC
+            LIMIT 1;
+           
+        """, ())
+
+        resultado = cursor.fetchone()
+        if resultado:
+          return resultado
+        else:
+            return ()
+    except Exception as e:
+        print(f" Erro ao buscar versículo atual: {e}")
+        return None
+
+def inserir_versiculo_atual(livro, versiculo,  conexao=conn):
+    """
+    Insere um novo versículo na tabela VESICULO_atual com data inicial e final de exibição.
+    """
+    try:
+        cursor = conexao.cursor()
+       
+        cursor.execute("""
+            INSERT INTO VESICULO_atual (LIVRO, VERSICULO)
+            VALUES (?, ?)
+        """, (livro, versiculo))
+        conexao.commit()
+
+        # Retorna o ID recém inserido
+        cursor.execute("SELECT last_insert_rowid()")
+        id_inserido = cursor.fetchone()[0]
+
+        print(f" Versículo inserido com sucesso! (ID: {id_inserido})")
+        return id_inserido
+
+    except Exception as e:
+        print(f" Erro ao inserir versículo atual: {e}")
+        return None
 #CADASTRO,EDIÇÃO E ATIVAÇÃO OU DESATIVAÇÃO DE MEMBROS
 
 #Cadastrar Membro
@@ -457,7 +612,7 @@ if criar_tabelas:
     CREATE TABLE VESICULO_atual(
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         LIVRO TEXT,     
-        VERSICULO TEXT,         
+        VERSICULO TEXT        
                    );  
 """)
     
@@ -553,6 +708,23 @@ if criar_tabelas:
         ativo=ativo_teste,
         permisoes=permissoes_teste
     )
+
+    # Data de hoje para preencher campo DATA_EXPOSICAO_INICIAL
+    data_hoje = datetime.now().date()
+
+    # Inserir versículos de exemplo
+    inserir_versiculo_atual("Filipenses 4:13", "Tudo posso naquele que me fortalece.")
+    inserir_versiculo_atual("Salmos 23:1", "O Senhor é o meu pastor; nada me faltará.")
+    inserir_versiculo_atual("Provérbios 3:5-6", "Confia no Senhor de todo o teu coração e não te apoies no teu próprio entendimento.")
+    inserir_versiculo_atual("Isaías 41:10", "Não temas, porque eu sou contigo; eu te fortaleço e te ajudo.")
+    inserir_versiculo_atual("João 3:16", "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito.")
+    cadastrar_vesiculo("Salmos 23:1", "O Senhor é o meu pastor; nada me faltará.")
+    cadastrar_vesiculo("Filipenses 4:13", "Tudo posso naquele que me fortalece.")
+    cadastrar_vesiculo("Provérbios 3:5-6", "Confia no Senhor de todo o teu coração.")
+    cadastrar_vesiculo("Isaías 41:10", "Não temas, porque eu sou contigo.")
+    cadastrar_vesiculo("João 3:16", "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito.")
+
+
 
 
 
@@ -1326,167 +1498,4 @@ def buscar_funcoes_por_area(area, conexao=cursor):
     except Exception as e:
         print(f" Erro ao buscar funções por área: {e}")
         return {}
-# ======================================
-# CRUD - VERSÍCULOS
-# ======================================
 
-def cadastrar_vesiculo( livro, versiculo, conexao=cursor):
-    """
-    Cadastra um novo versículo no banco.
-    """
-    try:
-        conexao.execute("""
-            INSERT INTO VESICULOS (LIVRO, VERSICULO)
-            VALUES (?, ?)
-        """, ( livro, versiculo))
-        conn.commit()
-        print(" Versículo cadastrado com sucesso.")
-        conexao.execute("""
-            SELECT ID, LIVRO, VERSICULO, DATA_CADASTRO
-            FROM VESICULOS
-            ORDER BY ID DESC
-        """)
-        id_inserido = cursor.lastrowid
-
-        print(f" Versículo cadastrado com sucesso (ID: {id_inserido})")
-        return id_inserido  # retorna o ID do versículo cadastrado
-    except Exception as e:
-        print(f" Erro ao cadastrar versículo: {e}")
-        
-
-
-def listar_vesiculos(conexao=cursor):
-    """
-    Retorna todos os versículos cadastrados no sistema.
-    """
-    try:
-        conexao.execute("""
-            SELECT ID, LIVRO, VERSICULO, DATA_CADASTRO
-            FROM VESICULOS
-            ORDER BY ID DESC
-        """)
-        resultado = conexao.fetchall()
-        lista = []
-        for v in resultado:
-            lista.append({
-                "id": v[0],
-                "livro": v[1],
-                "versiculo": v[2],
-                "data_cadastro": v[3]
-            })
-        return lista
-    except Exception as e:
-        print(f" Erro ao listar versículos: {e}")
-        return []
-
-
-def buscar_vesiculo_por_id(id_vesiculo, conexao=cursor):
-    """
-    Busca um versículo pelo ID.
-    """
-    try:
-        conexao.execute("""
-            SELECT ID, LIVRO, VERSICULO, DATA_CADASTRO
-            FROM VESICULOS
-            WHERE ID = ? ;
-        """, (id_vesiculo,))
-        resultado = conexao.fetchone()
-        if resultado:
-            return {
-                "id": resultado[0],
-                "livro": resultado[1],
-                "versiculo": resultado[2],
-                "data_cadastro": resultado[3]
-            }
-        return None
-    except Exception as e:
-        print(f" Erro ao buscar versículo: {e}")
-        return None
-
-
-def editar_vesiculo(id_vesiculo, novo_livro, novo_versiculo, conexao=cursor):
-    """
-    Edita o texto ou o livro de um versículo.
-    """
-    try:
-        conexao.execute("""
-            UPDATE VESICULOS
-            SET LIVRO = ?, VERSICULO = ?
-            WHERE ID = ?
-        """, (novo_livro, novo_versiculo, id_vesiculo))
-        conn.commit()
-        print(f" Versículo ID {id_vesiculo} atualizado com sucesso.")
-        return True
-    except Exception as e:
-        print(f" Erro ao editar versículo: {e}")
-        return False
-
-
-def deletar_vesiculo(id_vesiculo, conexao=cursor):
-    """
-    Remove um versículo do banco.
-    """
-    try:
-        conexao.execute("""
-            DELETE FROM VESICULOS WHERE ID = ?
-        """, (id_vesiculo,))
-        conn.commit()
-        print(f" Versículo ID {id_vesiculo} removido com sucesso.")
-        return True
-    except Exception as e:
-        print(f" Erro ao deletar versículo: {e}")
-        return False
-def buscar_versiculo_atual(conexao=conn):
-    """
-    Retorna o versículo correspondente à data atual (entre DATA_EXPOSICAO_INICIAL e DATA_EXPOSICAO_FINAL).
-    """
-    try:
-        cursor = conexao.cursor()
-        data_hoje = datetime.now().date()
-
-        cursor.execute("""
-            SELECT * FROM VESICULO_atual  ORDER BY ID DESC
-            LIMIT 1;
-           
-        """, ())
-
-        resultado = cursor.fetchone()
-        if resultado:
-          return resultado
-        else:
-            return ()
-    except Exception as e:
-        print(f" Erro ao buscar versículo atual: {e}")
-        return None
-
-def inserir_versiculo_atual(livro, versiculo, data_inicial, data_final,permanente, conexao=conn):
-    """
-    Insere um novo versículo na tabela VESICULO_atual com data inicial e final de exibição.
-    """
-    try:
-        cursor = conexao.cursor()
-        if permanente == True:
-            cursor.execute("""
-                INSERT INTO VESICULO_atual (LIVRO, VERSICULO,PERMANENTE)
-                VALUES (?, ?, ?)
-            """, (livro, versiculo,permanente))
-            conexao.commit()
-
-
-        else:
-            cursor.execute("""
-                INSERT INTO VESICULO_atual (LIVRO, VERSICULO, DATA_EXPOSICAO_INICIAL, DATA_EXPOSICAO_FINAL,PERMANENTE)
-                VALUES (?, ?, ?, ?,?)
-            """, (livro, versiculo, data_inicial, data_final,permanente))
-            conexao.commit()
-
-        # Retorna o ID recém inserido
-        cursor.execute("SELECT last_insert_rowid()")
-        id_inserido = cursor.fetchone()[0]
-
-        print(f" Versículo inserido com sucesso! (ID: {id_inserido})")
-        return id_inserido
-
-    except Exception as e:
-        print(f" Erro ao inserir versículo atual: {e}")
-        return None

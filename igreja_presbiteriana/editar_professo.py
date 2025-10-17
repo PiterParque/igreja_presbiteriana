@@ -417,15 +417,3 @@ class Ui_edicao_professos(QtWidgets.QWidget):
 
 
         
-
-           
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Widget = QtWidgets.QWidget()
-    ui = Ui_edicao_professos('nicolas')
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())
-
-       

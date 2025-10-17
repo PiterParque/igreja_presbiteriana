@@ -173,15 +173,3 @@ class Ui_editar_agregado(QtWidgets.QWidget):
         except Exception as e:
             QtWidgets.QMessageBox.critical(self, "Erro", f"Ocorreu uma exceção: {str(e)}")
 
-
-   
-       
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Widget = QtWidgets.QWidget()
-    ui = Ui_editar_agregado(nome="jão")
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())
-

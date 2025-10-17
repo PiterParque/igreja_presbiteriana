@@ -213,14 +213,3 @@ class ui_gestao_usaurios(QtWidgets.QWidget):
         
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    with open("./igreja_presbiteriana/estilo.qss", "r") as f:
-        app.setStyleSheet(f.read())
-
-    Widget = QtWidgets.QWidget()
-    ui = ui_gestao_usaurios()
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())

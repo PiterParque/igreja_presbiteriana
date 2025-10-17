@@ -326,12 +326,3 @@ class Ui_gestao_financeira(QtWidgets.QWidget):
             QMessageBox.information(None, "Sucesso", f"Planilha exportada em:\n{caminho}")
         except Exception as e:
             QMessageBox.critical(None, "Erro", f"Falha ao salvar o arquivo:\n{str(e)}")
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Widget = QtWidgets.QWidget()
-    ui = Ui_gestao_financeira()
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())

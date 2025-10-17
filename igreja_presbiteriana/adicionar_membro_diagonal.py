@@ -204,14 +204,6 @@ class Ui_adicioanar_membro_diagonal(QtWidgets.QWidget):
         self.dicionario_nome_id = filtrados
 
 
-if __name__ == "__main__":
-       import sys
-       app = QtWidgets.QApplication(sys.argv)
-       Widget = QtWidgets.QWidget()
-       ui = Ui_adicioanar_membro_diagonal()
-       ui.setupUi(Widget)
-       Widget.show()
-       sys.exit(app.exec())
 
 
 

@@ -6,7 +6,7 @@ background-color:rgb(4,64,22);
    background-repeat: no-repeat;
    background-position: center;
 }
-#inicio,#EditarMembro,#UI_gestao_funcoes,QMessageBox,#gestao_usuarios,#tela_logon,#opcoes{
+#inicio,#EditarMembro,#UI_gestao_funcoes,QMessageBox,#gestao_usuarios,#tela_logon,#opcoes,#movimentacao_finaceira{
     background-color: rgba(0,91,64,255);
 }
 ClickableLabel{

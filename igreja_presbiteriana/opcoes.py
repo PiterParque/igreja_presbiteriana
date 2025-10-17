@@ -372,15 +372,4 @@ class UI_opcoes(QtWidgets.QWidget):
             self.parent.atualizar_versiculo()
 
         
-      
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    with open("./estilo.qss", "r") as f:
-        app.setStyleSheet(f.read())
-    Widget = QtWidgets.QWidget()
-    ui = UI_opcoes()
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())
+ 

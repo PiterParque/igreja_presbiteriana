@@ -187,11 +187,3 @@ class Ui_adicionar_conselho(QtWidgets.QWidget):
         self.dicionario_nome_id = filtrados
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Widget = QtWidgets.QWidget()
-    ui = Ui_adicionar_conselho()
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())

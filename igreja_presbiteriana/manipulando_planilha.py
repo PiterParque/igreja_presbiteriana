@@ -119,16 +119,4 @@ def gerar_relatorio(inicio, fim, caminho_arquivo):
     return caminho_abs
 
 
-# Teste local
-if __name__ == "__main__":
-    inicio_teste = "2023-01-01"
-    fim_teste = "2025-12-31"
-    caminho_saida = "./relatorio_teste.xlsx"
 
-    try:
-        resultado = gerar_relatorio(inicio_teste, fim_teste, caminho_saida)
-        print(" Teste concluído!")
-        print(resultado)
-    except Exception as e:
-        print(" Erro ao gerar relatório:")
-        print(e)

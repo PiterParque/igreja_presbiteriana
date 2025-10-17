@@ -237,11 +237,3 @@ class Ui_cadastro_menores(QtWidgets.QWidget):
 
             msg.exec()
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    cadastro_menores = QtWidgets.QWidget()
-    ui = Ui_cadastro_menores()
-    ui.setupUi(cadastro_menores)
-    cadastro_menores.show()
-    sys.exit(app.exec())

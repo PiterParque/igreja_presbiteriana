@@ -726,14 +726,6 @@ class Ui_membros(QtWidgets.QWidget):
                 item = QtWidgets.QTableWidgetItem(str(val))
                 self.tabela_membros.setItem(linha, coluna, item)
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Widget = QtWidgets.QWidget()
-    ui = Ui_membros()
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())
 
        
    

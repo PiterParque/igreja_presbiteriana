@@ -17,7 +17,7 @@ class Ui_movimento_financeiro(QtWidgets.QWidget):
         self.parent=parent
         self.setupUi(self)
     def setupUi(self, Widget):
-        Widget.setObjectName("Widget")
+        Widget.setObjectName("movimentacao_finaceira")
         Widget.resize(392, 150)
         self.widget = QtWidgets.QWidget(parent=Widget)
         self.widget.setObjectName("widget")
@@ -147,11 +147,3 @@ class Ui_movimento_financeiro(QtWidgets.QWidget):
             msg.setText("Saldo insuficiente")
             msg.setWindowTitle("Erro")
             msg.exec()
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Widget = QtWidgets.QWidget()
-    ui = Ui_movimento_financeiro()
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())

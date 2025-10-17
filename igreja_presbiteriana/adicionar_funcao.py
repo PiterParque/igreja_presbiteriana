@@ -261,11 +261,3 @@ class ui_adicionar_funcao(QtWidgets.QWidget):
 
 
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     Widget = QtWidgets.QWidget()
-#     ui = ui_adicionar_funcao(area='LOUVOR')
-#     ui.setupUi(Widget)
-#     Widget.show()
-#     sys.exit(app.exec())

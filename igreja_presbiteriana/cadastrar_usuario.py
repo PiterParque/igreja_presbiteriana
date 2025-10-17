@@ -230,9 +230,3 @@ class Ui_CriarUsuario(QtWidgets.QWidget):
             nao_rb.setChecked(True)
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = Ui_CriarUsuario()
-    Form.show()
-    sys.exit(app.exec())

@@ -248,20 +248,3 @@ class Ui_editar_usuario(QtWidgets.QWidget):
                         rb.setChecked(True)
 
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     with open("./estilo.qss", "r") as f:
-#         app.setStyleSheet(f.read())
-
-#     usuario_teste = {
-#         "id": 1,
-#         "nome": "Administrador",
-#         "tipo_usuario": "admin",
-#         "data_entrada": "2025-10-07",
-#         "ativo": "sim",
-#     }
-
-#     janela = Ui_editar_usuario(usuario=usuario_teste)
-#     janela.show()
-#     sys.exit(app.exec())

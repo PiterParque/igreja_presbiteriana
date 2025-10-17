@@ -284,14 +284,3 @@ class ui_gestao_funcoes(QtWidgets.QWidget):
         except Exception as e:
             print(f"erro: {e}")
             QtWidgets.QMessageBox.warning(self, "Aviso", "Selecione um membro para remover.")
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    with open("./estilo.qss", "r") as f:
-        app.setStyleSheet(f.read())
-
-    Widget = QtWidgets.QWidget()
-    ui = ui_gestao_funcoes()
-    ui.setupUi(Widget)
-    Widget.show()
-    sys.exit(app.exec())

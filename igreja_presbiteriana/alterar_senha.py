@@ -101,12 +101,3 @@ class ui_alterar_senha(QtWidgets.QWidget):
             msg.exec()
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    with open("./estilo.qss", "r") as f:
-        app.setStyleSheet(f.read())
-
-    Widget = ui_alterar_senha()
-    Widget.show()
-    sys.exit(app.exec())

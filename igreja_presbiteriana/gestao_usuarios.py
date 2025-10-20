@@ -144,7 +144,7 @@ class ui_gestao_usaurios(QtWidgets.QWidget):
             
         
     def criar_usuario(self):
-        self.cadastrar_usuario_ui = Ui_CriarUsuario()
+        self.cadastrar_usuario_ui = Ui_CriarUsuario(parent=self)
         self.cadastrar_usuario_ui.show()
     def editar_usuario(self):
         linha_clicada=self.tableWidget.currentRow()

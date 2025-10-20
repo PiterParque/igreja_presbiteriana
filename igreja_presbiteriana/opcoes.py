@@ -344,6 +344,11 @@ class UI_opcoes(QtWidgets.QWidget):
         # Exemplo: atualizar label ou variável interna do programa
         self.data_hora_atual = data_hora_manual
         print("Data e hora definidas manualmente:", data_hora_manual.toString("yyyy-MM-dd HH:mm:ss"))
+        msg=QtWidgets.QMessageBox()
+        msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+        msg.setText("Data e hora atualizadas com sucesso!")
+        msg.setWindowTitle("Sucesso")
+        msg.exec()
     def salvar_versiculo_(self):
         versiculos = listar_vesiculos()
         id_versiculo =None

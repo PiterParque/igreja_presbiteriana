@@ -221,6 +221,8 @@ class Ui_editar_usuario(QtWidgets.QWidget):
         )
 
         QtWidgets.QMessageBox.information(self, "Sucesso", f"Usuário {nome} atualizado com sucesso!")
+        if self.parent:
+                self.parent.atualizar_tabela()
         self.close()
 
     def alterar_senha_(self):

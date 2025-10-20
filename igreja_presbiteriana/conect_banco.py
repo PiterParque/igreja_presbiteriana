@@ -185,7 +185,7 @@ if criar_tabelas:
     ativo_teste = 1
 
     print(" Testando criação de usuário...")
-    from igreja_presbiteriana.conect_banco import cadastrar_usuario,inserir_versiculo_atual,cadastrar_vesiculo
+    from conect_banco import cadastrar_usuario,inserir_versiculo_atual,cadastrar_vesiculo
     resultado = cadastrar_usuario(
         nome=nome_teste,
         senha=senha_teste,
@@ -619,7 +619,7 @@ def baixar_arquivo_transferencia(self, id_professo, conexao=cursor):
 def salvar_dados_professo(self, dados):
     """Salva os dados do formulário no banco de dados."""
     try:
-        from igreja_presbiteriana.conect_banco import conn  # use sua conexão
+        from conect_banco import conn  # use sua conexão
         cursor = conn.cursor()
 
         # Atualiza tabela PROFESSOS

@@ -69,6 +69,7 @@ class Ui_EditarMembro(QtWidgets.QWidget):
         if self.membro:
             self.preencher_campos()
         self.lineEdit_nome.setReadOnly(True)
+        self.dateEdit.setReadOnly(True)
 
     def preencher_campos(self):
         """Preenche os campos com os dados do membro recebido."""

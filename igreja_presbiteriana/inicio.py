@@ -11,7 +11,6 @@ from gestao_finaceira import Ui_gestao_financeira
 from membros import Ui_membros
 from gestao_funcoes import ui_gestao_funcoes
 from gestao_usuarios import ui_gestao_usaurios
-import sys
 from conect_banco import buscar_permissoes,autenticar_usuario,buscar_versiculo_atual
 from opcoes import UI_opcoes
 class ClickableLabel(QtWidgets.QLabel):

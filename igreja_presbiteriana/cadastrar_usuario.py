@@ -1,4 +1,4 @@
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6 import  QtGui, QtWidgets
 from conect_banco import cadastrar_usuario
 
 class Ui_CriarUsuario(QtWidgets.QWidget):

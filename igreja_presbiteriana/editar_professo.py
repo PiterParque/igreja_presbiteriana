@@ -9,7 +9,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from conect_banco import buscar_professo_por_nome,buscar_professo_transferido,baixar_arquivo_transferencia,salvar_dados_professo
 from PyQt6.QtWidgets import QButtonGroup
-import sys
 from PyQt6.QtWidgets import QFileDialog,QMessageBox
 
 

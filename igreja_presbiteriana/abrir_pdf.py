@@ -1,10 +1,10 @@
-import sys
+
 import sqlite3
 import os
 import tempfile
 import webbrowser
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QPushButton, QFileDialog,
+    QWidget, QPushButton, QFileDialog,
     QVBoxLayout, QMessageBox, QListWidget
 )
 

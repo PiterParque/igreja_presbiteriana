@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from conect_banco import  cadastrar_vesiculo,editar_vesiculo,deletar_vesiculo,listar_vesiculos,buscar_vesiculo_por_id,inserir_versiculo_atual,buscar_versiculo_atual
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
 class UI_opcoes(QtWidgets.QWidget):
     def __init__(self,parent=None):
         super().__init__()

@@ -597,6 +597,8 @@ class Ui_membros(QtWidgets.QWidget):
                 for x,colune in enumerate(co_relacao.keys()):
                     item = QtWidgets.QTableWidgetItem(str(integrates[integrante][co_relacao[colune]]))
                     self.lista_integrantes.setItem(i, x, item)
+                self.nome_id[integrates[integrante]['nome']]=integrante
+
     def conselho_janela(self):
         self.estado='conselho'
         self.lista_integrantes.clear()
@@ -618,14 +620,8 @@ class Ui_membros(QtWidgets.QWidget):
                 for x,colune in enumerate(co_relacao.keys()):
                     item = QtWidgets.QTableWidgetItem(str(integrates[integrante][co_relacao[colune]]))
                     self.lista_integrantes.setItem(i, x, item)
-        # self.estado='conselho'
-        # self.lista_integrantes.clear()
-        # self.widget_integrantes_grupos.setVisible(True)
-        # integrates=mostrar_conselho()
-        # self.nome_id={}
-        # for integrate in integrates.keys():
-        #     self.lista_integrantes.addItem(str(integrates[integrate]['nome']))
-        #     self.nome_id[str(integrates[integrate]['nome'])]=integrate
+                self.nome_id[integrates[integrante]['nome']]=integrante
+                    
     def adicionar_integrante(self):
         if self.estado == 'junta_diagonal':
             self.adicionar=Ui_adicioanar_membro_diagonal(parent=self)
@@ -729,5 +725,3 @@ class Ui_membros(QtWidgets.QWidget):
 
        
    
-       
-

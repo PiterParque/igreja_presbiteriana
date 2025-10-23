@@ -235,7 +235,7 @@ class Ui_editar_menores(QtWidgets.QWidget):
          telefone_responsavel=self.entreda_nome_outro_responsavel_2.text()
         # Converte para datetime
          dia, mes, ano = data_nascimento.split("-")
-         data_nasc = datetime.strptime(f"{dia}/{mes}/{ano}", "%d/%m/%Y").date()
+         data_nasc = datetime.strptime(f"{dia}-{mes}-{ano}", "%d-%m-%Y").date()
 
         # Calcula idade
          hoje = datetime.today().date()

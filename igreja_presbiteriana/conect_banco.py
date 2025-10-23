@@ -1379,3 +1379,4 @@ def inserir_versiculo_atual(livro, versiculo,  conexao=conn):
         print(f" Erro ao inserir versículo atual: {e}")
         return None
 #----------------------------
+print(mostrar_conselho())

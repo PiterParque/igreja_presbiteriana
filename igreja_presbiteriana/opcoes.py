@@ -268,6 +268,8 @@ class UI_opcoes(QtWidgets.QWidget):
         if id_item and id_item.text().isdigit():
             id_versiculo = int(id_item.text())
             deletar_vesiculo(id_versiculo)
+            if self.parent:
+               self.parent.atualizar_versiculo()
         else:
             # se não existir id (linha talvez incompleta), apenas remove visualmente
             print("Aviso: não foi possível obter o ID do versículo (removendo visualmente).")

@@ -152,7 +152,7 @@ class ui_gestao_usaurios(QtWidgets.QWidget):
         id_clicado=usuarios[linha_clicada]
         if id_clicado:
             usuario_dados=mostrar_usuarios()[id_clicado]
-            self.editar_usuario_ui = Ui_editar_usuario(usuario=usuario_dados)
+            self.editar_usuario_ui = Ui_editar_usuario(usuario=usuario_dados,parent=self)
             self.editar_usuario_ui.show()
         else:
             msg=QtWidgets.QMessageBox()
